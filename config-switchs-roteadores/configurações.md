@@ -20,9 +20,10 @@ password cisco
 login
 service password-encryption
 banner motd $ Apenas usuários autorizados! $
-interface range f0/1-4, f0/7-24, g0/1-2
-shutdown
-exit
+! Apenas se quiser desativar as interfaces
+! interface range f0/1-4, f0/7-24, g0/1-2  
+! shutdown
+! exit
 exit
 copy running-config startup-config
 
@@ -33,7 +34,6 @@ copy running-config startup-config
 Criação e ativação da vlan
 
 ```
-
 # configure terminal
 # vlan 99 ! cria vlan 99
 # exit
@@ -50,18 +50,15 @@ Criação e ativação da vlan
 Vincular portas a vlan
 
 ```
-
 interface range [f0/1 – 24],[g0/1 - 2] ! selecionar em ranges ou interface
 switchport access vlan [n°] ! vincular as interfaces selecionadas anteriormente a vlan
 exit
 
-
 ```
 
-Colocar um gateway padrão para acesso remoto
+Colocar um gateway padrão
 
 ```
-
 ip default-gateway [ip]
 
 ```
@@ -69,7 +66,6 @@ ip default-gateway [ip]
 Criar senha para a porta de console
 
 ```
-
 line con 0
 logging synchronous
 password cisco
@@ -81,8 +77,8 @@ exit
 Configurar o VTY para permitir acesso telnet
 
 ```
-
 line vty 0 15
+transport input telnet
 password cisco
 login
 end
