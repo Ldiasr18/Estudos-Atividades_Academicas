@@ -119,22 +119,9 @@ Para o caso do IOS da cisco, um arquivo que tenha a combinação "k9" suporta re
 
     Cisco IOS Software, C2960 Software (C2960-LANBASE'K9'-M), Version 15.0(2)SE7, RELEASE SOFTWARE (fc1)
     
-Configuração do ssh:
 
-```
+## Loop back
 
-S1# show ip ssh                                     !verificar suporte
-S1(config)# ip domain-name cisco.com
-S1(config)# crypto key generate rsa                 !1024 bits quando perguntado
-S1(config)# username admin secret ccna              !Para usuários autenticados localmente
+Interface lógica interna do roteador. Não se conecta a nenhum outro dispositivo nem é atribuida a uma interface.
 
-!- configurar as linhas vty
-
-S1(config)# line vty 0 15                           !ou a quantia de linhas vty que o dispositivo tiver
-S1(config-line)# transport input ssh
-S1(config-line)# login local                        
-S1(config-line)# exit
-S1(config)# ip ssh version 2
-
-```
-    
+Multiplas interfaces de loopback podem ser atribuidas num mesmo roteador.

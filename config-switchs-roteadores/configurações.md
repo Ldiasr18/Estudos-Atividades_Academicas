@@ -7,27 +7,35 @@ https://www.cisco.com/c/pt_br/solutions/small-business/resource-center/networkin
 ## Configuração Básica:
 ! - exemplo - 
 ```
-en
-conf t
-hostname S1
-no ip domain-lookup
-enable secret class
-line console 0
-password cisco
-login
-line vty 0 4
-password cisco
-login
-service password-encryption
-banner motd $ Apenas usuários autorizados! $
+> en
+# conf t
+(config)# hostname S1
+(config)# no ip domain-lookup
+(config)# enable secret class
+(config)# line console 0
+(config-line)# password cisco
+(config-line)# login
+(config-line)# line vty 0 4
+(config-line)# password cisco
+(config-line)# login
+(config)# service password-encryption
+(config)# banner motd $ Apenas usuários autorizados! $
 ! Apenas se quiser desativar as interfaces
-! interface range f0/1-4, f0/7-24, g0/1-2  
-! shutdown
-! exit
+!(config-if-range)# interface range f0/1-4, f0/7-24, g0/1-2  
+!(config-if-range)# shutdown
+!(config-if-range)# exit
 exit
-copy running-config startup-config
+# copy running-config startup-config
 
 ```
+
+## Ativar ipv6
+
+```
+(config)# ipv6 unicast-routing
+
+```
+
 
 ## Configuração de vlan
 
@@ -84,3 +92,35 @@ login
 end
 
 ```
+
+Configuração do ssh:
+
+```
+
+S1# show ip ssh                                     !verificar suporte
+S1(config)# ip domain-name cisco.com
+S1(config)# crypto key generate rsa                 !1024 bits quando perguntado
+S1(config)# username admin secret ccna              !Para usuários autenticados localmente
+
+!- configurar as linhas vty
+
+S1(config)# line vty 0 15                           !ou a quantia de linhas vty que o dispositivo tiver
+S1(config-line)# transport input ssh
+S1(config-line)# login local                        
+S1(config-line)# exit
+S1(config)# ip ssh version 2
+
+```
+    
+Adicionar descrição em interfaces 
+```
+description [coisas aqui escritas]
+```
+
+Interface de loopback
+```
+(config)# interface loopback [numero]
+(config-if)#ip [ip] [máscara]
+```
+
+
